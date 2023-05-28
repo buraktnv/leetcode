@@ -13,8 +13,9 @@
 var countConsistentStrings = function (allowed, words) {
   let countOfConsistentStrings = 0;
   let allowedLetters = allowed.split``;
-  words.forEach((x) => {
-    let uniqLetters = [...new Set(x.split``)];
+  words.forEach((word) => {
+    let letters = word.split``;
+    let uniqLetters = [...new Set(letters)];
     uniqLetters = uniqLetters.filter((el) => !allowedLetters.includes(el));
     if (!uniqLetters.length) countOfConsistentStrings++;
   });
