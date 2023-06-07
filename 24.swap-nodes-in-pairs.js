@@ -17,24 +17,11 @@
  * @return {ListNode}
  */
 var swapPairs = function (head) {
-  let arr = [];
-  let res = new ListNode();
-  let copy = res;
-  while (head) {
-    arr.push(head.val);
-    head = head.next;
-  }
-  let len = arr.length % 2 == 0 ? arr.length : arr.length - 1;
+  if (!head || !head.next) return head;
 
-  for (let i = 0; i < len; i++) {
-    if (i % 2 == 0) copy.next = new ListNode(arr[i + 1]);
-    else copy.next = new ListNode(arr[i - 1]);
-    copy = copy.next;
-  }
-  if (arr.length % 2 == 1) {
-    copy.next = new ListNode(arr[arr.length - 1]);
-    copy = copy.next;
-  }
-  return res.next;
+  const temp = head.next;
+  head.next = swapPairs(head.next.next);
+  temp.next = head;
+  return temp;
 };
 // @lc code=end
