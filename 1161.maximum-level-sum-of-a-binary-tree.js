@@ -18,31 +18,22 @@
  * @return {number}
  */
 var maxLevelSum = function (root) {
-  const levelToSumMap = {};
+  const sumMap = new Map();
 
-  const traverse = (node, level) => {
+  const sumOfLevel = (node, level) => {
     if (node.left) {
-      traverse(node.left, level + 1);
+      sumOfLevel(node.left, level + 1);
     }
-
     if (node.right) {
-      traverse(node.right, level + 1);
+      sumOfLevel(node.right, level + 1);
     }
 
-    levelToSumMap[level] = levelToSumMap[level] + node.val || node.val;
+    sumMap.set(level, node.val + sumMap.get(level) || node.val);
   };
 
-  traverse(root, 1);
-
-  let level;
-  let maxSum = -Infinity;
-
-  for (let levelToSum of Object.entries(levelToSumMap)) {
-    if (levelToSum[1] > maxSum) {
-      [level, maxSum] = [levelToSum[0], levelToSum[1]];
-    }
-  }
-
-  return level;
+  sumOfLevel(root, 1);
+  console.log(sumMap);
+  let max = [...sumMap.entries()].reduce((a, e) => (e[1] >= a[1] ? e : a));
+  return max[0];
 };
 // @lc code=end
